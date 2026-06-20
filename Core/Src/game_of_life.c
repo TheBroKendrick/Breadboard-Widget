@@ -41,6 +41,15 @@ static uint8_t count_neighbours(int x, int y) {
     return count;
 }
 
+void pixel_driver(void) {
+    for (int x = 0; x < SCREEN_WIDTH; x++) {
+        for (int y = 0; y < SCREEN_HEIGHT; y++) {
+            matrix[x][y] = next[x][y];
+            ssd1306_DrawPixel(x, y, matrix[x][y] ? White : Black);
+        }
+    }
+}
+
 void game_of_life(void) {
     for (int x = 0; x < SCREEN_WIDTH; x++) {
         for (int y = 0; y < SCREEN_HEIGHT; y++) {
@@ -53,10 +62,5 @@ void game_of_life(void) {
         }
     }
 
-    for (int x = 0; x < SCREEN_WIDTH; x++) {
-        for (int y = 0; y < SCREEN_HEIGHT; y++) {
-            matrix[x][y] = next[x][y];
-            ssd1306_DrawPixel(x, y, matrix[x][y] ? White : Black);
-        }
-    }
+    pixel_driver();
 }

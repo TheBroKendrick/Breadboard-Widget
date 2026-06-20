@@ -9,7 +9,8 @@
 #include "ssd1306.h"
 #include "ssd1306_fonts.h"
 #include "ssd1306_conf.h"
-#include "game_of_life.h"
+#include "screen_task.h"
+
 
 #define TICK_FREQUENCY 1000
 #define BLINK_FREQUENCY 2
@@ -22,10 +23,7 @@ static uint32_t Blinky_Next_Run = 0;
 static uint32_t Screen_Next_Run = 0;
 
 void app_main(void) {
-	ssd1306_Init();
-	ssd1306_Fill(Black);
-	game_of_life_init();
-	ssd1306_UpdateScreen();
+	screen_task_init();
 
 	Blinky_Next_Run = HAL_GetTick() + BLINKY_PERIOD_TICKS;
 	Screen_Next_Run = HAL_GetTick() + SCREEN_PERIOD_TICKS;
@@ -39,9 +37,7 @@ void app_main(void) {
 		}
 
 		if (ticks >= Screen_Next_Run) {
-			ssd1306_Fill(Black);
-			game_of_life();
-			ssd1306_UpdateScreen();
+			screen_task_execute();
 			Screen_Next_Run += SCREEN_PERIOD_TICKS;
 		}
 	}

@@ -1,3 +1,4 @@
 ../Core/Src/game_of_life.c:22:6:game_of_life_init	16	static
 ../Core/Src/game_of_life.c:31:16:count_neighbours	40	static
-../Core/Src/game_of_life.c:44:6:game_of_life	32	static
+../Core/Src/game_of_life.c:44:6:pixel_driver	16	static
+../Core/Src/game_of_life.c:53:6:game_of_life	24	static
