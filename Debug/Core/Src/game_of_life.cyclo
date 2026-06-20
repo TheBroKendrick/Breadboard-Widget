@@ -1,0 +1,3 @@
+../Core/Src/game_of_life.c:22:6:game_of_life_init	3
+../Core/Src/game_of_life.c:31:16:count_neighbours	5
+../Core/Src/game_of_life.c:44:6:game_of_life	8
