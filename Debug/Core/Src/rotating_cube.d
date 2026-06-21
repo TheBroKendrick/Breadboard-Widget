@@ -1,5 +1,5 @@
-Core/Src/screen_task.o: ../Core/Src/screen_task.c \
- ../Core/Inc/screen_task.h ../Core/Inc/ssd1306.h \
+Core/Src/rotating_cube.o: ../Core/Src/rotating_cube.c \
+ ../Core/Inc/rotating_cube.h ../Core/Inc/ssd1306.h \
  ../Core/Inc/ssd1306_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
@@ -29,9 +29,8 @@ Core/Src/screen_task.o: ../Core/Src/screen_task.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/ssd1306_conf.h ../Core/Inc/game_of_life.h \
- ../Core/Inc/rotating_cube.h
-../Core/Inc/screen_task.h:
+ ../Core/Inc/ssd1306_conf.h
+../Core/Inc/rotating_cube.h:
 ../Core/Inc/ssd1306.h:
 ../Core/Inc/ssd1306_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -63,5 +62,3 @@ Core/Src/screen_task.o: ../Core/Src/screen_task.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Inc/ssd1306_conf.h:
-../Core/Inc/game_of_life.h:
-../Core/Inc/rotating_cube.h:

@@ -8,6 +8,7 @@
 #include "ssd1306.h"
 #include "ssd1306_conf.h"
 #include "game_of_life.h"
+#include "rotating_cube.h"
 
 
 void screen_task_init(void) {
@@ -18,7 +19,11 @@ void screen_task_init(void) {
 }
 
 void screen_task_execute(void) {
-	ssd1306_Fill(Black);
-	game_of_life();
+//	ssd1306_Fill(Black);
+//	game_of_life();
+//	ssd1306_UpdateScreen();
+	Vec2D point = {0, 0};
+	point = convert_coords(&point);
+	ssd1306_DrawPixel(point.x, point.y, White);
 	ssd1306_UpdateScreen();
 }

@@ -8,6 +8,10 @@
 #ifndef INC_ROTATING_CUBE_H_
 #define INC_ROTATING_CUBE_H_
 
+typedef struct {
+	uint8_t x;
+	uint8_t y;
+} Vec2D;
 
-
+Vec2D convert_coords (Vec2D* point);
 #endif /* INC_ROTATING_CUBE_H_ */
