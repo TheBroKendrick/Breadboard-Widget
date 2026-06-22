@@ -19,6 +19,17 @@
 
 static uint8_t buffer[SCREEN_WIDTH][SCREEN_HEIGHT] = {0};
 
+Vec3D cube_vertices[8] = {
+		{-0.5, -0.5, 1.5},
+		{-0.5, 0.5, 1.5},
+		{0.5, -0.5, 1.5},
+		{0.5, 0.5, 1.5},
+
+		{-0.5, -0.5, 2},
+		{-0.5, 0.5, 2},
+		{0.5, -0.5, 2},
+		{0.5, 0.5, 2},
+};
 Vec2D convert_coords (Vec2D* point) {
 	Vec2D normalised_point = {0, 0};
 	normalised_point.x = (uint8_t)(((float)point -> x + 1)/2 * SCREEN_WIDTH) - 1;
