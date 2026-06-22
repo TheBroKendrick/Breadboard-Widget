@@ -9,15 +9,17 @@
 #define INC_ROTATING_CUBE_H_
 
 typedef struct {
-	uint8_t x;
-	uint8_t y;
+	float x;
+	float y;
 } Vec2D;
 
 typedef struct {
-	uint8_t x;
-	uint8_t y;
-	uint8_t z;
+	float x;
+	float y;
+	float z;
 } Vec3D;
 
-Vec2D convert_coords (Vec2D* point);
+Vec3D* init_vertices(void);
+void convert_coords (Vec2D* point);
+void init_cube(Vec3D** cube_vertices);
 #endif /* INC_ROTATING_CUBE_H_ */

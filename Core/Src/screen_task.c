@@ -22,8 +22,7 @@ void screen_task_execute(void) {
 //	ssd1306_Fill(Black);
 //	game_of_life();
 //	ssd1306_UpdateScreen();
-	Vec2D point = {0, 0};
-	point = convert_coords(&point);
-	ssd1306_DrawPixel(point.x, point.y, White);
+	Vec3D* cube_vertices = init_vertices();
+	init_cube(&cube_vertices);
 	ssd1306_UpdateScreen();
 }

@@ -19,22 +19,33 @@
 
 static uint8_t buffer[SCREEN_WIDTH][SCREEN_HEIGHT] = {0};
 
-Vec3D cube_vertices[8] = {
-		{-0.5, -0.5, 1.5},
-		{-0.5, 0.5, 1.5},
-		{0.5, -0.5, 1.5},
-		{0.5, 0.5, 1.5},
+Vec3D* init_vertices(void) {
+	static Vec3D cube_vertices[8] = {
+			{-0.5, -0.5, 1.5},
+			{-0.5, 0.5, 1.5},
+			{0.5, -0.5, 1.5},
+			{0.5, 0.5, 1.5},
 
-		{-0.5, -0.5, 2},
-		{-0.5, 0.5, 2},
-		{0.5, -0.5, 2},
-		{0.5, 0.5, 2},
-};
-Vec2D convert_coords (Vec2D* point) {
-	Vec2D normalised_point = {0, 0};
-	normalised_point.x = (uint8_t)(((float)point -> x + 1)/2 * SCREEN_WIDTH) - 1;
-	normalised_point.y = (uint8_t)(((float)point -> y + 1)/2 * SCREEN_HEIGHT) - 1;
-	return normalised_point;
+			{-0.5, -0.5, 2},
+			{-0.5, 0.5, 2},
+			{0.5, -0.5, 2},
+			{0.5, 0.5, 2},
+	};
+
+	return cube_vertices;
 }
 
+void convert_coords (Vec2D* point) {
+	point -> x = (uint8_t)(((float)point -> x + 1)/2 * SCREEN_WIDTH) - 1;
+	point -> y = (uint8_t)(SCREEN_HEIGHT - 1 - ((float)point -> y + 1)/2 * SCREEN_HEIGHT);
+}
 
+void init_cube(Vec3D** cube_vertices) {
+	for (size_t i = 0; i < 8; i++){
+		cube_vertices[i] -> x = (((float)cube_vertices[i] -> x + 1)/2 * SCREEN_WIDTH - 1) / cube_vertices[i] -> z;
+		cube_vertices[i] -> y = (SCREEN_HEIGHT - 1 - ((float)cube_vertices[i] -> y + 1)/2 * SCREEN_HEIGHT) / cube_vertices[i] -> z;
+		ssd1306_DrawPixel((uint8_t)cube_vertices[i] -> x, (uint8_t)cube_vertices[i] -> y, White);
+	}
+
+	ssd1306_UpdateScreen();
+}
