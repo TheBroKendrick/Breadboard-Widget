@@ -21,5 +21,5 @@ typedef struct {
 
 Vec3D* init_vertices(void);
 void convert_coords (Vec2D* point);
-void init_cube(Vec3D** cube_vertices);
+void draw_cube(Vec3D* cube_vertices);
 #endif /* INC_ROTATING_CUBE_H_ */

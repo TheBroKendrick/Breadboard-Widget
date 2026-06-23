@@ -14,8 +14,7 @@
 #define CUBE_WIDTH 40
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
-#define ORIGIN_X 63
-#define ORIGIN_Y 31
+#define NUM_OF_VERTICES 8
 
 static uint8_t buffer[SCREEN_WIDTH][SCREEN_HEIGHT] = {0};
 
@@ -40,12 +39,36 @@ void convert_coords (Vec2D* point) {
 	point -> y = (uint8_t)(SCREEN_HEIGHT - 1 - ((float)point -> y + 1)/2 * SCREEN_HEIGHT);
 }
 
-void init_cube(Vec3D** cube_vertices) {
-	for (size_t i = 0; i < 8; i++){
-		cube_vertices[i] -> x = (((float)cube_vertices[i] -> x + 1)/2 * SCREEN_WIDTH - 1) / cube_vertices[i] -> z;
-		cube_vertices[i] -> y = (SCREEN_HEIGHT - 1 - ((float)cube_vertices[i] -> y + 1)/2 * SCREEN_HEIGHT) / cube_vertices[i] -> z;
-		ssd1306_DrawPixel((uint8_t)cube_vertices[i] -> x, (uint8_t)cube_vertices[i] -> y, White);
+void draw_cube(Vec3D* cube_vertices) {
+	Vec2D projected_vertices[8] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+	for (size_t i = 0; i < NUM_OF_VERTICES; i++){
+		float px = cube_vertices[i].x / cube_vertices[i].z;
+		float py = cube_vertices[i].y / cube_vertices[i].z;
+
+		px = (((float)px + 1)/2 * SCREEN_WIDTH - 1);
+		py = (SCREEN_HEIGHT - 1 - ((float)py + 1)/2 * SCREEN_HEIGHT);
+
+		projected_vertices[i].x = px;
+		projected_vertices[i].y = py;
+		ssd1306_DrawPixel(px, py, White);
 	}
 
+	//One face
+	ssd1306_Line((uint8_t)projected_vertices[0].x, (uint8_t)projected_vertices[0].y, (uint8_t)projected_vertices[1].x, (uint8_t)projected_vertices[1].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[0].x, (uint8_t)projected_vertices[0].y, (uint8_t)projected_vertices[2].x, (uint8_t)projected_vertices[2].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[1].x, (uint8_t)projected_vertices[1].y, (uint8_t)projected_vertices[3].x, (uint8_t)projected_vertices[3].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[2].x, (uint8_t)projected_vertices[2].y, (uint8_t)projected_vertices[3].x, (uint8_t)projected_vertices[3].y, White);
+
+	//Other face
+	ssd1306_Line((uint8_t)projected_vertices[4].x, (uint8_t)projected_vertices[4].y, (uint8_t)projected_vertices[5].x, (uint8_t)projected_vertices[5].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[6].x, (uint8_t)projected_vertices[6].y, (uint8_t)projected_vertices[7].x, (uint8_t)projected_vertices[7].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[4].x, (uint8_t)projected_vertices[4].y, (uint8_t)projected_vertices[6].x, (uint8_t)projected_vertices[6].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[5].x, (uint8_t)projected_vertices[5].y, (uint8_t)projected_vertices[7].x, (uint8_t)projected_vertices[7].y, White);
+
+	//Connecting the two
+	ssd1306_Line((uint8_t)projected_vertices[0].x, (uint8_t)projected_vertices[0].y, (uint8_t)projected_vertices[4].x, (uint8_t)projected_vertices[4].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[1].x, (uint8_t)projected_vertices[1].y, (uint8_t)projected_vertices[5].x, (uint8_t)projected_vertices[5].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[2].x, (uint8_t)projected_vertices[2].y, (uint8_t)projected_vertices[6].x, (uint8_t)projected_vertices[6].y, White);
+	ssd1306_Line((uint8_t)projected_vertices[3].x, (uint8_t)projected_vertices[3].y, (uint8_t)projected_vertices[7].x, (uint8_t)projected_vertices[7].y, White);
 	ssd1306_UpdateScreen();
 }

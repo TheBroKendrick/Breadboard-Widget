@@ -14,6 +14,9 @@
 void screen_task_init(void) {
 	ssd1306_Init();
 	ssd1306_Fill(Black);
+	Vec3D* cube_vertices = init_vertices();
+	draw_cube(cube_vertices);
+	ssd1306_UpdateScreen();
 	game_of_life_init();
 	ssd1306_UpdateScreen();
 }
@@ -22,7 +25,4 @@ void screen_task_execute(void) {
 //	ssd1306_Fill(Black);
 //	game_of_life();
 //	ssd1306_UpdateScreen();
-	Vec3D* cube_vertices = init_vertices();
-	init_cube(&cube_vertices);
-	ssd1306_UpdateScreen();
 }

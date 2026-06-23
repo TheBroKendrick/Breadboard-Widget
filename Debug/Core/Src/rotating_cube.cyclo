@@ -1,3 +1,3 @@
-../Core/Src/rotating_cube.c:22:8:init_vertices	1
-../Core/Src/rotating_cube.c:38:6:convert_coords	1
-../Core/Src/rotating_cube.c:43:6:init_cube	2
+../Core/Src/rotating_cube.c:21:8:init_vertices	1
+../Core/Src/rotating_cube.c:37:6:convert_coords	1
+../Core/Src/rotating_cube.c:42:6:draw_cube	2
