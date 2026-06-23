@@ -18,28 +18,24 @@
 
 static uint8_t buffer[SCREEN_WIDTH][SCREEN_HEIGHT] = {0};
 
-Vec3D* init_vertices(void) {
-	static Vec3D cube_vertices[8] = {
-			{-0.5, -0.5, 1.5},
-			{-0.5, 0.5, 1.5},
-			{0.5, -0.5, 1.5},
-			{0.5, 0.5, 1.5},
+static Vec3D cube_vertices[8] = {
+		{-0.5, -0.5, 1.5},
+		{-0.5, 0.5, 1.5},
+		{0.5, -0.5, 1.5},
+		{0.5, 0.5, 1.5},
 
-			{-0.5, -0.5, 2},
-			{-0.5, 0.5, 2},
-			{0.5, -0.5, 2},
-			{0.5, 0.5, 2},
-	};
-
-	return cube_vertices;
-}
+		{-0.5, -0.5, 2},
+		{-0.5, 0.5, 2},
+		{0.5, -0.5, 2},
+		{0.5, 0.5, 2},
+};
 
 void convert_coords (Vec2D* point) {
 	point -> x = (uint8_t)(((float)point -> x + 1)/2 * SCREEN_WIDTH) - 1;
 	point -> y = (uint8_t)(SCREEN_HEIGHT - 1 - ((float)point -> y + 1)/2 * SCREEN_HEIGHT);
 }
 
-void draw_cube(Vec3D* cube_vertices) {
+void draw_cube(void) {
 	Vec2D projected_vertices[8] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 	for (size_t i = 0; i < NUM_OF_VERTICES; i++){
 		float px = cube_vertices[i].x / cube_vertices[i].z;

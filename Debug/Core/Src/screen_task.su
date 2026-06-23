@@ -1,2 +1,2 @@
-../Core/Src/screen_task.c:14:6:screen_task_init	16	static
-../Core/Src/screen_task.c:24:6:screen_task_execute	4	static
+../Core/Src/screen_task.c:14:6:screen_task_init	8	static
+../Core/Src/screen_task.c:23:6:screen_task_execute	4	static
