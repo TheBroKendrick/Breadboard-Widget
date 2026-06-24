@@ -14,14 +14,14 @@
 void screen_task_init(void) {
 	ssd1306_Init();
 	ssd1306_Fill(Black);
-	draw_cube();
-	ssd1306_UpdateScreen();
-	game_of_life_init();
 	ssd1306_UpdateScreen();
 }
 
 void screen_task_execute(void) {
-//	ssd1306_Fill(Black);
+	ssd1306_Fill(Black);
 //	game_of_life();
-//	ssd1306_UpdateScreen();
+	ssd1306_UpdateScreen();
+	draw_cube();
+	rotate_cube();
+	ssd1306_UpdateScreen();
 }

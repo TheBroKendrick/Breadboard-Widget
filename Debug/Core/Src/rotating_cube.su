@@ -1,2 +1,3 @@
-../Core/Src/rotating_cube.c:33:6:convert_coords	16	static
-../Core/Src/rotating_cube.c:38:6:draw_cube	112	static
+../Core/Src/rotating_cube.c:36:6:rotate_cube	56	static
+../Core/Src/rotating_cube.c:73:7:convert_coords	40	static
+../Core/Src/rotating_cube.c:81:6:draw_cube	48	static

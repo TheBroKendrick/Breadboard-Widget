@@ -6,6 +6,7 @@
  */
 #include <stdint.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "rotating_cube.h"
 #include "ssd1306.h"
@@ -30,23 +31,61 @@ static Vec3D cube_vertices[8] = {
 		{0.5, 0.5, 2},
 };
 
-void convert_coords (Vec2D* point) {
-	point -> x = (uint8_t)(((float)point -> x + 1)/2 * SCREEN_WIDTH) - 1;
-	point -> y = (uint8_t)(SCREEN_HEIGHT - 1 - ((float)point -> y + 1)/2 * SCREEN_HEIGHT);
+static Vec2D projected_vertices[8] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+
+void rotate_cube (void) {
+	uint8_t theta = 2;
+	float c = cos(theta);
+	float s = sin(theta);
+
+	//Axis of rotation
+	float u = 2, v = 2, w = 2;
+	float mag = sqrt(u*u + v*v + w*w);
+	u /= mag;
+	v /= mag;
+	w /= mag;
+
+	for (size_t i = 0; i < NUM_OF_VERTICES; i++) {
+		float x = cube_vertices[i].x;
+		float y = cube_vertices[i].y;
+		float z = cube_vertices[i].z;
+
+		float dot_product = u*x + v*y + w*z;
+
+		//Rodrigues formula implementation
+		cube_vertices[i].x =
+		    u*dot_product*(1-c) +
+		    x*c +
+		    (-w*y + v*z)*s;
+
+		cube_vertices[i].y =
+		    v*dot_product*(1-c) +
+		    y*c +
+		    (w*x - u*z)*s;
+
+		cube_vertices[i].z =
+		    w*dot_product*(1-c) +
+		    z*c +
+		    (-v*x + u*y)*s;
+	}
+}
+
+Vec2D convert_coords (float x, float y) {
+	Vec2D new_point = {0, 0};
+	new_point.x = ((x + 1)/2 * SCREEN_WIDTH) - 1;
+	new_point.y = SCREEN_HEIGHT - 1 - (y + 1)/2 * SCREEN_HEIGHT;
+	return new_point;
+
 }
 
 void draw_cube(void) {
-	Vec2D projected_vertices[8] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 	for (size_t i = 0; i < NUM_OF_VERTICES; i++){
 		float px = cube_vertices[i].x / cube_vertices[i].z;
 		float py = cube_vertices[i].y / cube_vertices[i].z;
 
-		px = (((float)px + 1)/2 * SCREEN_WIDTH - 1);
-		py = (SCREEN_HEIGHT - 1 - ((float)py + 1)/2 * SCREEN_HEIGHT);
+		projected_vertices[i] = convert_coords(px, py);
 
-		projected_vertices[i].x = px;
-		projected_vertices[i].y = py;
-		ssd1306_DrawPixel(px, py, White);
+		ssd1306_DrawPixel((uint8_t)projected_vertices[i].x, (uint8_t)projected_vertices[i].y, White);
 	}
 
 	//One face
