@@ -21,7 +21,7 @@ void screen_task_execute(void) {
 	ssd1306_Fill(Black);
 //	game_of_life();
 	ssd1306_UpdateScreen();
-	draw_cube();
 	rotate_cube();
+	draw_cube();
 	ssd1306_UpdateScreen();
 }

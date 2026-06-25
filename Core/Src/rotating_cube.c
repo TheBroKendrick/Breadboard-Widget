@@ -16,39 +16,54 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define NUM_OF_VERTICES 8
+#define PI 3.14159625
 
-static uint8_t buffer[SCREEN_WIDTH][SCREEN_HEIGHT] = {0};
+static float theta = 0;
+
+Vec3D base_vertices[8] = {
+	    {-0.5f, -0.5f, -0.5f},
+	    {-0.5f,  0.5f, -0.5f},
+	    { 0.5f, -0.5f, -0.5f},
+	    { 0.5f,  0.5f, -0.5f},
+	    {-0.5f, -0.5f,  0.5f},
+	    {-0.5f,  0.5f,  0.5f},
+	    { 0.5f, -0.5f,  0.5f},
+	    { 0.5f,  0.5f,  0.5f},
+};
 
 static Vec3D cube_vertices[8] = {
-		{-0.5, -0.5, 1.5},
-		{-0.5, 0.5, 1.5},
-		{0.5, -0.5, 1.5},
-		{0.5, 0.5, 1.5},
-
-		{-0.5, -0.5, 2},
-		{-0.5, 0.5, 2},
-		{0.5, -0.5, 2},
-		{0.5, 0.5, 2},
+	    {-0.5f, -0.5f, -0.5f},
+	    {-0.5f,  0.5f, -0.5f},
+	    { 0.5f, -0.5f, -0.5f},
+	    { 0.5f,  0.5f, -0.5f},
+	    {-0.5f, -0.5f,  0.5f},
+	    {-0.5f,  0.5f,  0.5f},
+	    { 0.5f, -0.5f,  0.5f},
+	    { 0.5f,  0.5f,  0.5f},
 };
 
 static Vec2D projected_vertices[8] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
 void rotate_cube (void) {
-	uint8_t theta = 2;
+	if (theta <= 2* PI) {
+		theta += 0.1;
+	} else {
+		theta = 0;
+	}
 	float c = cos(theta);
 	float s = sin(theta);
 
 	//Axis of rotation
-	float u = 2, v = 2, w = 2;
+	float u = 1, v = 2, w = 3;
 	float mag = sqrt(u*u + v*v + w*w);
 	u /= mag;
 	v /= mag;
 	w /= mag;
 
 	for (size_t i = 0; i < NUM_OF_VERTICES; i++) {
-		float x = cube_vertices[i].x;
-		float y = cube_vertices[i].y;
-		float z = cube_vertices[i].z;
+		float x = base_vertices[i].x;
+		float y = base_vertices[i].y;
+		float z = base_vertices[i].z;
 
 		float dot_product = u*x + v*y + w*z;
 
@@ -80,8 +95,9 @@ Vec2D convert_coords (float x, float y) {
 
 void draw_cube(void) {
 	for (size_t i = 0; i < NUM_OF_VERTICES; i++){
-		float px = cube_vertices[i].x / cube_vertices[i].z;
-		float py = cube_vertices[i].y / cube_vertices[i].z;
+		float pz = cube_vertices[i].z + 2;
+		float px = cube_vertices[i].x / pz;
+		float py = cube_vertices[i].y / pz;
 
 		projected_vertices[i] = convert_coords(px, py);
 
